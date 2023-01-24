@@ -2,21 +2,21 @@ import { createContext, useState, useEffect } from "react";
 
 export const DataContext = createContext();
 
+const todosLocalStorage = JSON.parse(localStorage.getItem("todos"));
+
 const DataProvider = ({ children }) => {
   const [inputText, setInputText] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(todosLocalStorage || []);
   const [status, setStatus] = useState("all");
   const [filteredTodos, setFilteredTodos] = useState([]);
 
-  //run once when the app starts
   useEffect(() => {
-    getLocalTodos();
-  }, []);
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   useEffect(() => {
     filterHandler();
-    saveLocalStorage();
-  }, [todos, status]);
+  }, [status, todos]);
 
   const filterHandler = () => {
     switch (status) {
@@ -32,22 +32,6 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  // saveLocalStorage
-  const saveLocalStorage = () => {
-    // with React Strict mode
-    if (todos.length > 0) {
-      localStorage.setItem("todos", JSON.stringify(todos));
-    }
-    // without the strict mode
-    // localStorage.setItem("todos", JSON.stringify(todos));
-  };
-  const getLocalTodos = () => {
-    const todos = JSON.parse(localStorage.getItem("todos"));
-    if (todos) {
-      setTodos(todos);
-    }
-  };
-
   return (
     <DataContext.Provider
       value={{
@@ -60,8 +44,6 @@ const DataProvider = ({ children }) => {
         filteredTodos,
         setFilteredTodos,
         filterHandler,
-        saveLocalStorage,
-        getLocalTodos,
       }}
     >
       {children}
