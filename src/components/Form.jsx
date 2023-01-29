@@ -31,6 +31,7 @@ const Form = () => {
           value={inputText}
           type="text"
           className="todo-input"
+          placeholder="Write a todo"
         />
         <button
           onClick={submitTodoHandler}

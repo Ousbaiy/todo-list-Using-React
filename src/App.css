@@ -8,7 +8,7 @@ body {
   color: white;
   font-family: "Poppins", sans-serif;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 header {

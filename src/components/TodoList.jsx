@@ -7,7 +7,7 @@ const TodoList = () => {
   
   return (
     <div className="todo-container">
-      <ul className="todo-list">
+      <ul title="list" className="todo-list">
         {filteredTodos.map((todo) => (
           <Todo text={todo.text} key={todo.id} todo={todo} />
         ))}
