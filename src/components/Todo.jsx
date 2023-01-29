@@ -24,7 +24,7 @@ const Todo = ({ todo }) => {
     );
   };
   return (
-    <div className="todo">
+    <div className="todo" data-testid='todo'>
       <li key={id} className={`todo-item ${todo.completed ? "completed" : ""}`}>
         {text}
       </li>

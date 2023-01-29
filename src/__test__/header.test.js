@@ -1,54 +1,76 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Header from "../components/Header";
-import TodoList from "../components/TodoList";
+import App from "../App";
+import DataProvider from "../context/dataContext";
+
 
 describe("Header", () => {
-  it("should render same text passed into title prop", () => {
-    render(<Header title="todo" />);
-    const h1Element = screen.getByText(/todo/i);
-    expect(h1Element).toBeInTheDocument();
+  it("should render heading element", () => {
+    render(
+      <DataProvider>
+        <App />
+      </DataProvider>
+    );
+    const headingElement = screen.getByText(/todo list/i);
+    expect(headingElement).toBeInTheDocument();
   });
 });
 
-// it("should render same text passed into title prop", () => {
-//   render(<Header title="todo" />);
-//   const h1Element = screen.getByRole("heading");
-//   expect(h1Element).toBeInTheDocument();
-// });
 
-// it("should render same text passed into title prop", () => {
-//   render(<Header title="todo" />);
-//   const h1Element = screen.getByRole("heading", { name: /todo/i });
-//   expect(h1Element).toBeInTheDocument();
-// });
+describe("Input", () => {
+  it("should render input element", () => {
+    render(
+      <DataProvider>
+        <App />
+      </DataProvider>
+    );
+    const inputElement = screen.getByPlaceholderText(/Add a new task here.../i);
+    expect(inputElement).toBeInTheDocument();
+  });
 
-// it("should render same text passed into title prop", () => {
-//   render(<Header title="todo" />);
-//   const h2Element = screen.getByTestId("header-1");
-//   expect(h2Element).toBeInTheDocument();
-// });
+  it("should be able to type into input", () => {
+    render(
+      <DataProvider>
+        <App />
+      </DataProvider>
+    );
+    const inputElement = screen.getByPlaceholderText(/Add a new task here.../i);
+    // fireEvent.click(inputElement);
+    fireEvent.change(inputElement, {
+      target: { value: "Go Grocery Shopping" },
+    });
+    expect(inputElement.value).toBe("Go Grocery Shopping");
+  });
 
-// WITH FINDBY
+  it("should be able to display the added todo", () => {
+    render(
+      <DataProvider>
+        <App />
+      </DataProvider>
+    );
+    const inputElement = screen.getByPlaceholderText(/Add a new task here.../i);
+    fireEvent.click(inputElement);
+    fireEvent.change(inputElement, {
+      target: { value: "Go Grocery Shopping" },
+    });
+    const buttonElement = screen.getByTestId(/add-button/i);
+    fireEvent.click(buttonElement);
+    const todoElement = screen.getByTestId(/todo/i);
+    expect(todoElement).toBeInTheDocument();
+  });
 
-// it("should render same text passed into title prop", async () => {
-//   render(<Header title="todo" />);
-//   const h1Element = await screen.findByText(/todo/i);
-//   expect(h1Element).toBeInTheDocument();
-// });
-
-// WITH QUERYBY
-
-// it("should render same text passed into title prop", () => {
-//   render(<Header title="todo" />);
-//   const h1Element = screen.queryByText(/dogs/i);
-//   expect(h1Element).not.toBeInTheDocument;
-// });
-
-// WITH GETALLBY
-
-// it.only("should render same text passed into title prop", () => {
-//   render(<Header title="todo" />);
-//   const h1Elements = screen.getAllByText(/todo/i);
-//   expect(h1Elements.length).toBe(1);
-// });
+  it("should have empty input when new todo is added", () => {
+    render(
+      <DataProvider>
+        <App />
+      </DataProvider>
+    );
+    const inputElement = screen.getByPlaceholderText(/Add a new task here.../i);
+    fireEvent.change(inputElement, {
+      target: { value: "Go Grocery Shopping" },
+    });
+    const buttonElement = screen.getByTestId(/add-button/i);
+    fireEvent.click(buttonElement);
+    expect(inputElement.value).toBe("");
+  });
+});

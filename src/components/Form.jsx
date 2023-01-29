@@ -31,12 +31,14 @@ const Form = () => {
           value={inputText}
           type="text"
           className="todo-input"
-          placeholder="Write a todo"
+          placeholder="Add a new task here..."
         />
         <button
           onClick={submitTodoHandler}
           className="todo-button"
           type="submit"
+          name="add"
+          data-testid='add-button'
         >
           <i className="fas fa-plus-square"></i>
         </button>
