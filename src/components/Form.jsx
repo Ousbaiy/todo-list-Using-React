@@ -38,13 +38,18 @@ const Form = () => {
           className="todo-button"
           type="submit"
           name="add"
-          data-testid='add-button'
+          data-testid="add-button"
         >
           <i className="fas fa-plus-square"></i>
         </button>
       </div>
       <div className="select">
-        <select onChange={statusHandler} name="todos" className="filter-todo">
+        <select
+          data-testid="select"
+          onChange={statusHandler}
+          name="todos"
+          className="filter-todo"
+        >
           <option value="all">All</option>
           <option value="completed">Completed</option>
           <option value="uncompleted">Uncompleted</option>

@@ -24,14 +24,26 @@ const Todo = ({ todo }) => {
     );
   };
   return (
-    <div className="todo" data-testid='todo'>
-      <li key={id} className={`todo-item ${todo.completed ? "completed" : ""}`}>
+    <div className="todo">
+      <li
+        data-testid="todo-container"
+        key={id}
+        className={`todo-item ${todo.completed ? "completed" : ""}`}
+      >
         {text}
       </li>
-      <button onClick={completeHandler} className="complete-btn">
+      <button
+        onClick={completeHandler}
+        className="complete-btn"
+        data-testid="complete-btn"
+      >
         <i className="fas fa-check"></i>
       </button>
-      <button onClick={deleteHandler} className="trash-btn">
+      <button
+        onClick={deleteHandler}
+        className="trash-btn"
+        data-testid="delete-btn"
+      >
         <i className="fas fa-trash"></i>
       </button>
     </div>
